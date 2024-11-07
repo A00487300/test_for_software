@@ -12,15 +12,23 @@ steps:
   displayName: 'Install Node.js'
 
 
+- script: |
+    cd src/test/ClientApp
+    npm install
+    npm run build
+  displayName: 'npm install and build'
 
-- task: Npm@1
+
+- task: CopyFiles@2
   inputs:
-    customCommand: 'npm install && npm run build'
-    workingDir: '/Users/sicongfu/RiderProjects/test_for_software/src/test/ClientApp'
-  displayName: 'npm install'
+    SourceFolder: 'src/test/ClientApp/build'  # 确保这个是构建输出目录
+    Contents: '**'  # 复制所有内容
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/ClientAppBuild'
+
+
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/src/client/'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ClientAppBuild'
     ArtifactName: 'drop'
     publishLocation: 'Container'
