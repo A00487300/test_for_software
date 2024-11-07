@@ -10,19 +10,17 @@ steps:
     versionSource: 'spec'
     versionSpec: '23.1.0'
   displayName: 'Install Node.js'
+# 确保仓库已签出
+- checkout: self
 
+# 列出默认工作目录的内容
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp'
     script: |
-      set -e
-      echo "In ClientApp Directory:"
-      pwd
-      ls -al
-      npm install --verbose
-      npm run build --verbose
-  displayName: '在 ClientApp 目录中执行 npm install 和 build'
+      echo "System.DefaultWorkingDirectory: $(System.DefaultWorkingDirectory)"
+      ls -al "$(System.DefaultWorkingDirectory)"
+  displayName: '列出 DefaultWorkingDirectory 的内容'
 
 
 
