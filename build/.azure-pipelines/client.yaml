@@ -16,10 +16,18 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      echo "Current Directory:"
+      pwd
+      echo "Contents:"
+      ls -al
+      echo "Navigating to ClientApp Directory..."
       cd $(Build.SourcesDirectory)/src/test/ClientApp
+      echo "In ClientApp Directory:"
+      pwd
+      ls -al
       npm install
       npm run build
-  displayName: 'npm install and build in ClientApp'
+  displayName: 'Debugging path and npm install'
 
 
 
