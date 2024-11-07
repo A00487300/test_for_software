@@ -14,7 +14,7 @@ steps:
 - task: Npm@1
   inputs:
     customCommand: 'npm install && npm run build'
-    workingDir: '../../src/Users/sicongfu/RiderProjects/test_for_software/src/test/ClientApp/'
+    workingDir: '../../src/test/ClientApp/'
   displayName: 'npm install'
 
 - task: PublishBuildArtifacts@1
