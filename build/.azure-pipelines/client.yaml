@@ -11,19 +11,18 @@ steps:
     versionSpec: '23.1.0'
   displayName: 'Install Node.js'
 
-
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
       echo "Project Root Directory: $(System.DefaultWorkingDirectory)"
-      cd $(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp
+      cd "$(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp"
       echo "In ClientApp Directory:"
       pwd
       ls -al  # 列出文件以确认 package.json 存在
       npm install
       npm run build
-  displayName: 'npm install and build in ClientApp with adjusted path'
+  displayName: 'npm install and build in ClientApp with full path'
 
 
 
