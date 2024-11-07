@@ -14,15 +14,15 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp'
     script: |
-      echo "Project Root Directory: $(System.DefaultWorkingDirectory)"
-      cd "$(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp"
+      set -e
       echo "In ClientApp Directory:"
       pwd
-      ls -al  # 列出文件以确认 package.json 存在
-      npm install
-      npm run build
-  displayName: 'npm install and build in ClientApp with full path'
+      ls -al
+      npm install --verbose
+      npm run build --verbose
+  displayName: '在 ClientApp 目录中执行 npm install 和 build'
 
 
 
