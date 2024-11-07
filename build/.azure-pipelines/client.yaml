@@ -12,26 +12,14 @@ steps:
   displayName: 'Install Node.js'
 
 
-# 确保路径正确的脚本任务
-- script: |
-    echo "Current Directory:"
-    pwd
-    echo "Listing contents:"
-    ls
-    cd src/test/ClientApp  # 如果根目录已设置为项目根，这样的相对路径应该有效
-    echo "Changed to ClientApp Directory:"
-    pwd
-    npm install
-    npm run build
-  displayName: 'npm install and build'
-
-# 将构建输出复制到指定的目标文件夹
-- task: CopyFiles@2
+- task: Bash@3
   inputs:
-    SourceFolder: 'src/test/ClientApp/build'  # 确保构建输出到此文件夹
-    Contents: '**'  # 复制所有内容
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/ClientAppBuild'
-  displayName: 'Copy build output to artifact staging'
+    targetType: 'inline'
+    script: |
+      cd $(Build.SourcesDirectory)/src/test/ClientApp
+      npm install
+      npm run build
+  displayName: 'npm install and build in ClientApp'
 
 
 
