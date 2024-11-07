@@ -14,6 +14,7 @@ steps:
 
 # 确保仓库已签出
 - checkout: self
+  path: test_for_software
 
 # 列出 DefaultWorkingDirectory 的内容
 - task: Bash@3
@@ -24,7 +25,18 @@ steps:
       ls -al "$(System.DefaultWorkingDirectory)"
   displayName: '列出 DefaultWorkingDirectory 的内容'
 
-# 进入 ClientApp 目录并构建项目
+# 验证工作目录内容
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/src/test/ClientApp'
+    script: |
+      echo "Current Directory:"
+      pwd
+      ls -al
+  displayName: '验证工作目录内容'
+
+# 在 ClientApp 目录中执行 npm install 和 build
 - task: Bash@3
   inputs:
     targetType: 'inline'
@@ -34,25 +46,9 @@ steps:
       echo "In ClientApp Directory:"
       pwd
       ls -al
-      npm install --verbose
-      npm run build --verbose
+      npm install
+      npm run build
   displayName: '在 ClientApp 目录中执行 npm install 和 build'
-
-# 复制构建输出到制品暂存目录
-- task: CopyFiles@2
-  inputs:
-    contents: '[构建输出目录]/**'
-    targetFolder: '$(Build.ArtifactStagingDirectory)/ClientAppBuild'
-  displayName: '复制构建输出到制品暂存目录'
-
-# 列出制品暂存目录的内容
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      echo "Contents of $(Build.ArtifactStagingDirectory)/ClientAppBuild:"
-      ls -al "$(Build.ArtifactStagingDirectory)/ClientAppBuild"
-  displayName: '列出 ClientAppBuild 目录的内容'
 
 
 - task: PublishBuildArtifacts@1
