@@ -21,10 +21,13 @@ steps:
     targetType: 'inline'
     script: |
       echo "System.DefaultWorkingDirectory: $(System.DefaultWorkingDirectory)"
+      echo "Contents of $(System.DefaultWorkingDirectory):"
       ls -al "$(System.DefaultWorkingDirectory)"
-      echo "Contents of $(System.DefaultWorkingDirectory)/src:"
-      ls -al "$(System.DefaultWorkingDirectory)/src"
-  displayName: '列出 DefaultWorkingDirectory 的内容'
+      echo "Contents of $(System.DefaultWorkingDirectory)/test_for_software:"
+      ls -al "$(System.DefaultWorkingDirectory)/test_for_software"
+      echo "Contents of $(System.DefaultWorkingDirectory)/test_for_software/src:"
+      ls -al "$(System.DefaultWorkingDirectory)/test_for_software/src"
+  displayName: '列出目录内容'
 
 
 - task: PublishBuildArtifacts@1
