@@ -12,24 +12,23 @@ steps:
   displayName: 'Install Node.js'
 
 
-# 确保仓库已签出，保留 path 参数
+# 确保仓库已签出（移除 path 参数）
 - checkout: self
-  path: test_for_software
 
-# 列出代码签出目录的内容
+# 列出 DefaultWorkingDirectory 的内容
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
-      echo "Pipeline.Workspace: $(Pipeline.Workspace)"
-      ls -al "$(Pipeline.Workspace)/test_for_software"
-  displayName: '列出代码签出目录的内容'
+      echo "System.DefaultWorkingDirectory: $(System.DefaultWorkingDirectory)"
+      ls -al "$(System.DefaultWorkingDirectory)"
+  displayName: '列出 DefaultWorkingDirectory 的内容'
 
 # 验证工作目录内容
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    workingDirectory: '$(Pipeline.Workspace)/test_for_software/src/test/ClientApp'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp'
     script: |
       echo "Current Directory:"
       pwd
@@ -40,7 +39,7 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    workingDirectory: '$(Pipeline.Workspace)/test_for_software/src/test/ClientApp'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp'
     script: |
       set -e
       echo "In ClientApp Directory:"
