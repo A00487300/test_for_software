@@ -22,32 +22,9 @@ steps:
     script: |
       echo "System.DefaultWorkingDirectory: $(System.DefaultWorkingDirectory)"
       ls -al "$(System.DefaultWorkingDirectory)"
+      echo "Contents of $(System.DefaultWorkingDirectory)/src:"
+      ls -al "$(System.DefaultWorkingDirectory)/src"
   displayName: '列出 DefaultWorkingDirectory 的内容'
-
-# 验证工作目录内容
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp'
-    script: |
-      echo "Current Directory:"
-      pwd
-      ls -al
-  displayName: '验证工作目录内容'
-
-# 在 ClientApp 目录中执行 npm install 和 build
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/test_for_software/src/test/ClientApp'
-    script: |
-      set -e
-      echo "In ClientApp Directory:"
-      pwd
-      ls -al
-      npm install
-      npm run build
-  displayName: '在 ClientApp 目录中执行 npm install 和 build'
 
 
 - task: PublishBuildArtifacts@1
